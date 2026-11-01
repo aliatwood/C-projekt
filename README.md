@@ -17,7 +17,10 @@ Du kan testa dina kunskaper genom att svara på frågor och välja olika svårig
 - C#
 - .NET 10
 - Blazor
+- Razor Components
 - HTML och CSS
+- LINQ
+- Dependency Injection (DI)
 
 ## Så startar du projektet
 
