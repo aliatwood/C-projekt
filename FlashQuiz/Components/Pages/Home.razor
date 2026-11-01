@@ -1,0 +1,215 @@
+﻿@page "/"
+
+@* Sidans titel *@
+<PageTitle>Home</PageTitle>
+
+@* Startsida med bakgrundsgifs, introduktion och knapp till quizzet *@
+<header class="main-header">
+    <div class="split-bg-layer">
+        <div class="split-side zoom-side">
+            <img src="/zoom.gif" class="bg-gif" alt="Zoom" />
+        </div>
+
+        <div class="split-side flash-side">
+            <img src="/flash-gif.gif" class="bg-gif" alt="The Flash" />
+        </div>
+    </div>
+
+    @* Introduktionstext och knapp som leder till quizet *@
+    <div class="intro-content">
+        <h1>⚡ Feel the Speed. Become The Flash.⚡</h1>
+
+        <p>
+            ⏱️ Test your reflexes, race against time, and prove you're the fastest.
+            Ready to go full speed? ⚡
+        </p>
+
+        <NavLink href="quiz" class="start-btn">
+            Go Full Speed! ⚡
+        </NavLink>
+    </div>
+</header>
+
+<style>
+    /* Grundläggande inställningar för sidans storlek och utseende */
+    html,
+    body,
+    #app {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100%;
+    }
+
+    /* Anpassar bakgrund, typsnitt och sidans utseende */
+    body {
+        overflow-x: hidden;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        background-color: #000;
+    }
+
+    /* Huvudrubrikens utseende */
+    h1 {
+        font-size: 3rem;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(245, 12, 12, 0.8);
+    }
+
+    p {
+        font-size: 1.5rem;
+        color: white;
+        text-shadow: 2px 2px 8px rgba(245, 12, 12, 0.3);
+        max-width: 800px;
+    }
+
+    /* Huvudsektion som täcker hela skärmens höjd */
+    .main-header {
+        position: relative;
+        height: 100vh;
+        min-height: 600px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 3rem;
+        overflow: hidden;
+        background-color: #000;
+    }
+
+    /* Lager som placerar bakgrundsbilderna bakom innehållet */
+    .split-bg-layer {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+    }
+
+    /* Gemensam placering och storlek för bakgrundsbilderna */
+    .split-side {
+        position: absolute;
+        top: 0;
+        width: 56%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .zoom-side {
+        left: 0;
+        z-index: 1;
+    }
+
+    .flash-side {
+        right: 0;
+        z-index: 2;
+    }
+
+    /* Anpassar bakgrundsbildernas storlek, ljusstyrka och placering */
+    .bg-gif {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        filter: brightness(0.45);
+    }
+
+    /* Skapar en mjuk övergång mellan de två bakgrundsbilderna */
+    .flash-side .bg-gif {
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 21.5%);
+        mask-image: linear-gradient(to right, transparent 0%, black 21.5%);
+    }
+
+    /* Placerar introduktionstexten och knappen i mitten av sidan */
+    .intro-content {
+        position: relative;
+        z-index: 4;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 2rem;
+    }
+
+    /* Utformning av knappen som leder till quizet */
+    .start-btn {
+        background-color: #FFDE4D;
+        color: #111318;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 1rem 2.5rem;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(245, 12, 12, 0.6);
+        transition: all 0.2s ease-in-out;
+        text-decoration: none;
+    }
+
+    /* Effekt när användaren hovrar över knappen */
+    .start-btn:hover {
+        transform: scale(1.05);
+        background-color: #FFF078;
+        box-shadow: 0 0 25px rgba(245, 12, 12, 0.9), 0 0 10px #FFDE4D;
+    }
+
+    /* Effekt när användaren trycker på knappen */
+    .start-btn:active {
+        transform: scale(0.98);
+    }
+
+    /* Media quary för max width 1023px */
+    @@media (max-width: 1023px) {   
+    .main-header {
+        padding: 0 2rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    p {
+        font-size: 1.3rem;
+        max-width: 600px;
+    }
+
+    .split-side {
+        width: 60%;
+    }
+
+    .intro-content {
+        gap: 1.5rem;
+    }
+
+    .start-btn {
+        font-size: 1.3rem;
+        padding: 0.9rem 2rem;
+    }
+}
+
+    @@media (max-width: 600px) {
+    .main-header {
+        min-height: 500px;
+        padding: 0 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1.1rem;
+        max-width: 100%;
+    }
+
+    .split-side {
+        width: 75%;
+    }
+
+    .start-btn {
+        font-size: 1.1rem;
+        padding: 0.8rem 1.8rem;
+    }
+}
+</style>

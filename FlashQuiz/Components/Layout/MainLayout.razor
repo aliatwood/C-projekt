@@ -1,0 +1,24 @@
+﻿@* Använder Blazors grundläggande funktionalitet för sidlayouts *@
+@inherits LayoutComponentBase
+
+@* Huvudlayout som innehåller sidomenyn och sidans innehåll *@
+<div class="page">
+    @* Visar navigeringsmenyn för applikationens olika sidor *@
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    @* Huvudområdet där innehållet från den aktuella sidan visas *@
+    <main>
+        <article class="content">
+            @Body
+        </article>
+    </main>
+</div>
+
+@* Visar ett felmeddelande om ett oväntat fel inträffar i applikationen *@
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+</div>

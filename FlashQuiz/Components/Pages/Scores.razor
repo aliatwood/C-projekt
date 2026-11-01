@@ -1,0 +1,279 @@
+@page "/Scores"
+@inject ScoreService ScoreService
+
+<PageTitle>Scores</PageTitle>
+
+<h1>⚡ Hall of Fame ⚡</h1>
+<p>The fastest minds in Central City</p>
+
+@* Visar topplistan med spelarnas resultat. *@
+<div class="scores-container">
+    <NavLink href="" class="leave-quiz-btn">← Leave Page</NavLink>
+    <table class="scores-table">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Difficulty</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @* Visar ett meddelande om det inte finns några sparade resultat. *@
+            @if (highscores.Count == 0)
+            {
+                <tr>
+                    <td colspan="4">No highscores recorded yet. Be the first! ⚡</td>
+                </tr>
+            } else
+            {
+                int currentRank = 1;
+
+                @* Skriver ut varje spelares placering och resultat. *@
+                @foreach (var scoreItem in highscores)
+                {
+                    <tr class="@(currentRank == 1 ? "top-player" : "")">
+                        <td>@currentRank@GetOrdinalSuffix(currentRank++)</td>
+                        <td>@scoreItem.PlayerName</td>
+                        <td>@scoreItem.Difficulty</td>
+                        <td>@scoreItem.Score / @scoreItem.TotalQuestions</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <div class="back-btn-container">
+        <NavLink href="" class="back-btn">⚡ Back to Start</NavLink>
+    </div>
+</div>
+
+@code {
+    // Lagrar resultaten som hämtas från ScoreService.
+    private List<ScoreService.ScoreModel> highscores = new();
+
+    // Hämtar topplistan när sidan öppnas.
+    protected override void OnInitialized()
+    {
+        highscores = ScoreService.GetHighscores();
+    }
+    // Returnerar rätt ändelse för placeringar, 1st, 2nd och 3rd.
+    private string GetOrdinalSuffix(int num)
+    {
+        if (num <= 0) return "";
+        
+        if ((num % 100) >= 11 && (num % 100) <= 13)
+        {
+            return "th";
+        }
+        
+        return (num % 10) switch
+        {
+            1 => "st",
+            2 => "nd",
+            3 => "rd",
+            _ => "th"
+        };
+    }
+}
+
+<style>
+    *, *::before, *::after{
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box;
+    }
+
+    /* Sidans bakgrund och grundläggande textutseende. */
+    body{
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        background-image: linear-gradient(rgba(17, 19, 24, 0.75), rgba(17, 19, 24, 0.75)), url('/flash-header.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-color: #111318;
+    }
+
+    h1{
+        font-size: 3rem;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(245, 12, 12, 0.8);
+        text-align: center;
+        margin-top: 2rem !important;
+    }
+
+    p{
+        font-size: 1.5rem;
+        color: white;
+        text-shadow: 2px 2px 8px rgba(245, 12, 12, 0.3);
+        text-align: center;
+    }
+
+    /* Utseendet på topplistan och tabell. */
+    .scores-container{
+    max-width: 650px;
+    background-color: #1a1d24;
+    padding: 30px;
+    border-radius: 16px;
+    margin: 3rem auto !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+    .scores-table{
+        width: 100%;
+        border-collapse: collapse;
+        color: white;
+        font-size: 1.1rem;
+        text-align: center;
+    }
+
+    .scores-table th, .scores-table td{
+        padding: 1rem;
+        border-bottom: 1px solid #2a2f3b;
+    }
+
+    .scores-table th{
+        color: #FFDE4D;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    .top-player{
+        color: #FFDE4D;
+        font-weight: bold;
+        background-color: rgba(255, 222, 77, 0.05);
+    }
+
+    .scores-table tbody tr:hover{
+        background-color: rgba(245, 12, 12, 0.1);
+        transition: background-color 0.2s ease;
+    }
+
+    .back-btn-container {
+        text-align: center;
+        margin-top: 2rem !important;
+    }
+
+    .back-btn {
+        display: inline-block;
+        background-color: #2a2f3b;
+        color: white;
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 0.8rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .back-btn:hover {
+        background-color: #f50c0c;
+        transform: scale(1.03);
+        box-shadow: 0 0 15px rgba(245, 12, 12, 0.5);
+    }
+
+    .back-btn:active {
+        transform: scale(0.98);
+    }
+
+    .leave-quiz-btn {
+        display: inline-block;
+        color: #a0aec0;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1.5rem !important;
+        transition: color 0.2s ease-in-out;
+    }
+
+    .leave-quiz-btn:hover {
+        color: #f50c0c;
+    }
+
+    @@media (max-width: 1023px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    p {
+        font-size: 1.3rem;
+    }
+
+    .scores-container {
+        max-width: 600px;
+        width: calc(100% - 3rem);
+        padding: 25px !important;
+    }
+
+    .scores-table {
+        font-size: 1rem;
+    }
+
+    .scores-table th,
+    .scores-table td {
+        padding: 0.8rem !important;
+    }
+
+    .back-btn {
+        font-size: 1rem;
+    }
+
+    @@media (max-width: 600px) {
+    h1 {
+        font-size: 2rem;
+        margin-top: 1.5rem !important;
+    }
+
+    p {
+        font-size: 1.1rem;
+        padding: 0 1rem !important;
+    }
+
+    .scores-container {
+        width: calc(100% - 2rem);
+        max-width: 100%;
+        padding: 1rem !important;
+        margin: 2rem auto !important;
+        border-radius: 12px;
+        overflow-x: auto;
+    }
+
+    .scores-table {
+        font-size: 0.85rem;
+        min-width: 100%;
+    }
+
+    .scores-table th,
+    .scores-table td {
+        padding: 0.7rem 0.4rem !important;
+    }
+
+    .scores-table th {
+        font-size: 0.75rem;
+        letter-spacing: 0;
+    }
+
+    .leave-quiz-btn {
+        font-size: 0.8rem;
+        margin-bottom: 1rem !important;
+    }
+
+    .back-btn {
+        font-size: 0.9rem;
+        padding: 0.7rem 1.5rem !important;
+    }
+
+    .back-btn-container {
+        margin-top: 1.5rem !important;
+    }
+}
+}   
+
+</style>
